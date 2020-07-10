@@ -5,21 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
+import com.example.travel_reviews.databinding.FragmentReviewsBinding
 
 class ReviewsFragment : Fragment() {
 
-    
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    private val viewModel: ReviewsViewModel by lazy {
+        ViewModelProviders.of(this).get(ReviewsViewModel::class.java)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val binding = FragmentReviewsBinding.inflate(inflater)
 
-        return inflater.inflate(R.layout.fragment_reviews, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+        setHasOptionsMenu(true)
+        return binding.root
     }
 }
