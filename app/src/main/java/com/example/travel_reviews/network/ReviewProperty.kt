@@ -2,7 +2,12 @@ package com.example.travel_reviews.network
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 data class ReviewList(
     @Json(name = "reviews")
@@ -16,7 +21,7 @@ data class ReviewProperty(
     val id: String,
 
     @Json(name = "created")
-    val datePosted: String,
+    val created: String,
 
     @Json(name = "rating")
     val rating: Float,
@@ -29,6 +34,18 @@ data class ReviewProperty(
 
     val nameAndLocation
         get() = "${author.fullName} - ${author.location ?: ""}"
+
+    @IgnoredOnParcel
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale("en", "US"))
+
+    @IgnoredOnParcel
+    val outputFormat = SimpleDateFormat("EEEE, MMMM dd, yyyy", Locale("en", "US"))
+
+    @IgnoredOnParcel
+    val date = inputFormat.parse(created)
+
+    val datePosted: String?
+        get() = outputFormat.format(date) ?: ""
 }
 
 @Parcelize
