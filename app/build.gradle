@@ -24,6 +24,15 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     dataBinding {
         enabled = true
     }
@@ -36,6 +45,7 @@ dependencies {
     def retrofit_coroutines_adapter_version = "0.9.2"
     def moshi_version = "1.8.0"
     def kotlin_coroutines_version = "1.1.0"
+    def glide_version = "4.8.0"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
@@ -68,4 +78,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofit_coroutines_adapter_version"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
 }

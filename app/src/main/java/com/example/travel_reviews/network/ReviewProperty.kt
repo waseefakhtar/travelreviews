@@ -5,8 +5,6 @@ import com.squareup.moshi.Json
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 data class ReviewList(
@@ -54,4 +52,7 @@ data class Author(
     val fullName: String,
 
     @Json(name = "country")
-    val location: String?): Parcelable
+    val location: String?,
+
+    @Json(name = "photo")
+    val avatarUrl: String = ""): Parcelable

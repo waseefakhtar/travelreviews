@@ -50,14 +50,41 @@
             tools:text="Our guide, Giulia, told us about everyday life in Venice today and in past times as well as being very knowledgable about the buildings in the city!"
             />
 
-        <View
-            android:id="@+id/user_avatar"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/user_avatar_view"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/round_shape"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp"
+            android:background="@drawable/ic_launcher_background"
             app:layout_constraintTop_toBottomOf="@id/rating_content"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <ImageView
+                android:id="@+id/user_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_shape"
+                app:imageUrl="@{property.author.avatarUrl}"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:textAllCaps="true"
+            android:text="@{property.author.fullName.substring(0, 1)}"
+            android:visibility="@{property.author.avatarUrl.empty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="@id/user_avatar_view"
+            app:layout_constraintBottom_toBottomOf="@id/user_avatar_view"
+            app:layout_constraintStart_toStartOf="@id/user_avatar_view"
+            app:layout_constraintEnd_toEndOf="@id/user_avatar_view"
+            tools:text="L"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,9 +92,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            app:layout_constraintStart_toEndOf="@+id/user_avatar"
-            app:layout_constraintTop_toTopOf="@id/user_avatar"
-            app:layout_constraintBottom_toBottomOf="@id/user_avatar"
+            app:layout_constraintStart_toEndOf="@+id/user_avatar_view"
+            app:layout_constraintTop_toTopOf="@id/user_avatar_view"
+            app:layout_constraintBottom_toBottomOf="@id/user_avatar_view"
             >
 
             <TextView
