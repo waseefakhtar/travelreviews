@@ -4,14 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.travel_reviews.network.ReviewProperty
-import com.example.travel_reviews.network.ReviewsAPI
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagedList
+import com.example.travel_reviews.network.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
-import java.util.logging.Logger
 
 enum class ReviewsAPIStatus { LOADING, ERROR, DONE }
 
@@ -22,30 +23,43 @@ class ReviewsViewModel : ViewModel() {
     val status: LiveData<ReviewsAPIStatus>
         get() = _status
 
-    private val _properties = MutableLiveData<List<ReviewProperty>>()
+    private val _properties = MutableLiveData<PagedList<ReviewProperty>>()
 
-    val properties: LiveData<List<ReviewProperty>>
+    val properties: LiveData<PagedList<ReviewProperty>>
         get() = _properties
+
+    val pagedListLiveData : LiveData<PagedList<ReviewProperty>> by lazy {
+        val dataSourceFactory = ReviewsDataSourceFactory()
+        val config = PagedList.Config.Builder()
+            .setPageSize(LIMIT)
+            .build()
+        LivePagedListBuilder(dataSourceFactory, config).build()
+    }
+
+    private val _dataSource = MutableLiveData<PageKeyedDataSource<Int, ReviewProperty>>()
+
+    val dataSource: MutableLiveData<PageKeyedDataSource<Int, ReviewProperty>>
+        get() = _dataSource
 
     private var viewModelJob = Job()
 
     private val coroutineScope = CoroutineScope(
         viewModelJob + Dispatchers.Main )
 
-    /**
-     * Call getMarsRealEstateProperties() on init so we can display status immediately.
-     */
     init {
-        getReviewProperties()
+
+        Log.i("ReviewsDataSource", String.format("1 init is run: %s", pagedListLiveData.value))
+
+
+        _properties.value = pagedListLiveData.value
     }
 
-
-    private fun getReviewProperties() {
+    /*private fun getReviewProperties(limit: Int, offset: Int) {
         coroutineScope.launch {
-            val getPropertiesDeferred = ReviewsAPI.retrofitService.getPropertiesAsync()
+            val propertiesDeferred = ReviewsAPI.retrofitService.getPropertiesAsync(limit, offset)
             try {
                 _status.value = ReviewsAPIStatus.LOADING
-                val listResult = getPropertiesDeferred.await()
+                val listResult = propertiesDeferred.await()
                 _status.value = ReviewsAPIStatus.DONE
                 _properties.value = listResult.reviewList
                 Log.i("ReviewsViewModel", String.format("1 getReviewProperties is run: %s", listResult))
@@ -55,6 +69,5 @@ class ReviewsViewModel : ViewModel() {
                 Log.i("ReviewsViewModel", String.format("2 getReviewProperties is run: %s", e))
             }
         }
-    }
-
+    }*/
 }

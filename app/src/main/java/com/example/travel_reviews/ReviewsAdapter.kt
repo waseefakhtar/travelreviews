@@ -2,22 +2,22 @@ package com.example.travel_reviews
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.travel_reviews.databinding.ListViewItemBinding
 import com.example.travel_reviews.network.ReviewProperty
 
-class ReviewsAdapter() : ListAdapter<ReviewProperty,
-        ReviewsAdapter.ReviewPropertyViewHolder>(DiffCallback) {
+class ReviewsAdapter() : PagedListAdapter<ReviewProperty, ReviewsAdapter.ReviewPropertyViewHolder>(DiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewsAdapter.ReviewPropertyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewPropertyViewHolder {
         return ReviewPropertyViewHolder(ListViewItemBinding.inflate(
             LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: ReviewPropertyViewHolder, position: Int) {
-        val marsProperty = getItem(position)
+        val marsProperty = getItem(position) as ReviewProperty
         holder.bind(marsProperty)
     }
 

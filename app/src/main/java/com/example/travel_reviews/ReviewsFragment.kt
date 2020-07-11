@@ -1,14 +1,21 @@
 package com.example.travel_reviews
 
+import android.content.ClipData.Item
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travel_reviews.databinding.FragmentReviewsBinding
+import com.example.travel_reviews.network.ReviewProperty
+
 
 class ReviewsFragment : Fragment() {
 
@@ -22,17 +29,23 @@ class ReviewsFragment : Fragment() {
     ): View? {
         val binding = FragmentReviewsBinding.inflate(inflater)
 
-        initRecyclerView(binding)
-
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        initRecyclerView(binding)
 
         setHasOptionsMenu(true)
         return binding.root
     }
 
     private fun initRecyclerView(binding: FragmentReviewsBinding) {
-        binding.reviewsRecyclerView.adapter = ReviewsAdapter()
+        val adapter = ReviewsAdapter()
+        binding.viewModel?.pagedListLiveData?.observe(this, Observer<PagedList<ReviewProperty>> { pagedList ->
+            Log.i("ReviewsDataSource", String.format("1 initRecyclerView is run: %s", pagedList.size))
+
+                adapter.submitList(pagedList)
+            })
+        binding.reviewsRecyclerView.adapter = adapter
 
         val dividerItemDecoration = DividerItemDecoration(
             binding.reviewsRecyclerView.context,
