@@ -44,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{property.content}"
+            android:visibility="@{property.content.empty ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/rating_bar"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
