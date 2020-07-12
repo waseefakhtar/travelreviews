@@ -1,4 +1,4 @@
-package com.example.travel_reviews
+package com.example.travel_reviews.reviews
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -11,8 +11,6 @@ import com.example.travel_reviews.network.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import java.util.*
 
 enum class ReviewsAPIStatus { LOADING, ERROR, DONE }
 

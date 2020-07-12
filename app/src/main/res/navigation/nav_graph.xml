@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/reviewsFragment"
-        android:name="com.example.travel_reviews.ReviewsFragment"
+        android:name="com.example.travel_reviews.reviews.ReviewsFragment"
         android:label="fragment_reviews"
         tools:layout="@layout/fragment_reviews" />
 </navigation>
