@@ -10,14 +10,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.travel_reviews.network.ReviewProperty
 import java.util.*
 
-/*@BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView,
-                     viewModel: ReviewsViewModel,
-                     data: PagedList<ReviewProperty>?) {
-    val adapter = recyclerView.adapter as ReviewsAdapter
-    adapter.submitList(data)
-}*/
-
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
