@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-const val LIMIT = 20
+const val LIMIT = 10
 private const val OFFSET = 0
 
 class ReviewsDataSource : PageKeyedDataSource<Int, ReviewProperty>() {
@@ -25,7 +25,7 @@ class ReviewsDataSource : PageKeyedDataSource<Int, ReviewProperty>() {
             val propertiesDeferred = ReviewsAPI.retrofitService.getPropertiesAsync(LIMIT, OFFSET)
             try {
                 val listResult = propertiesDeferred.await()
-                callback.onResult(listResult.reviewList, null, OFFSET + 1)
+                callback.onResult(listResult.reviewList, null, LIMIT)
                 Log.i("ReviewsDataSource", String.format("1 loadInitial is run: %s", listResult.reviewList.size))
             } catch (e: Exception) {
                 Log.i("ReviewsDataSource", String.format("2 loadInitial is run: %s", e))
