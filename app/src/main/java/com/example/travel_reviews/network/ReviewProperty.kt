@@ -34,7 +34,7 @@ data class ReviewProperty(
         get() = "${author.fullName} - ${author.location ?: ""}"
 
     @IgnoredOnParcel
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale("en", "US"))
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale("en", "US"))
 
     @IgnoredOnParcel
     val outputFormat = SimpleDateFormat("EEEE, MMMM dd, yyyy", Locale("en", "US"))
