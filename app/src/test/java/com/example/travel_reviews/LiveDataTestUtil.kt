@@ -2,7 +2,6 @@ package com.example.travel_reviews
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import org.junit.jupiter.api.extension.ExtendWith
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException

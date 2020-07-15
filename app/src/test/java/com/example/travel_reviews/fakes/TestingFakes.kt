@@ -8,7 +8,7 @@ class MainNetworkCompletableFake : ReviewsAPIService {
 
     private var completable = CompletableDeferred<ReviewList>()
 
-    override suspend fun getPropertiesAsync(limit: Int, offset: Int): ReviewList = completable.await()
+    override suspend fun getPropertiesAsync(limit: Int, offset: Int, sort: String?): ReviewList = completable.await()
 
     fun sendCompletionToAllCurrentRequests(result: ReviewList) {
         completable.complete(result)
