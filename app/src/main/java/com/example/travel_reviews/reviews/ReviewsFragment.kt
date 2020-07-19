@@ -40,7 +40,7 @@ class ReviewsFragment : Fragment() {
 
     private fun initNetworkState(binding: FragmentReviewsBinding) {
         binding.viewModel?.networkState?.observe(this, Observer<NetworkState> { networkState ->
-            Log.i("ReviewsDataSource", String.format("0 initRecyclerView is run: %s", networkState))
+            Log.i("ReviewsDataSource", String.format("initRecyclerView is run: %s", networkState))
         })
     }
 
