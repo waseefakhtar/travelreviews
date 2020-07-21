@@ -1,6 +1,8 @@
-# Android Take Home Test from GetYourGuide
+# GetYourGuide Travel Reviews
 
-This package includes an APK to run on your Android device in _/apk_ directory as well as some screenshots and a GIF from the app in _/asset_ directory.
+<img src="https://github.com/waseefakhtar/travelreviews/blob/master/asset/TravelReviewsGIF.gif" width="300"/>
+
+This repo includes an APK to run on your Android device in _/apk_ directory as well as some screenshots and a GIF from the app in _/asset_ directory.
 
 ## How to install APK on your device
 
