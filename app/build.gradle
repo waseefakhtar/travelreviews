@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.travel_reviews"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -31,14 +31,24 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+        useIR = true
     }
 
     testOptions {
         unitTests.returnDefaultValues = true
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.0.0-alpha01"
+    }
+
     dataBinding {
         enabled = true
+    }
+
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
     }
 }
 
@@ -94,4 +104,22 @@ dependencies {
 
     // Local unit tests
     testImplementation("com.squareup.okhttp3:mockwebserver:4.8.0")
+
+    // Jetpack Compose
+    implementation 'androidx.compose.ui:ui:1.0.0-alpha01'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.ui:ui-tooling:1.0.0-alpha01'
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    implementation 'androidx.compose.foundation:foundation:1.0.0-alpha01'
+    // Material Design
+    implementation 'androidx.compose.material:material:1.0.0-alpha01'
+    // Material design icons
+    implementation 'androidx.compose.material:material-icons-core:1.0.0-alpha01'
+    implementation 'androidx.compose.material:material-icons-extended:1.0.0-alpha01'
+    // Integration with observables
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-alpha01'
+    implementation 'androidx.compose.runtime:runtime-rxjava2:1.0.0-alpha01'
+
+    // UI Tests
+    androidTestImplementation 'androidx.ui:ui-test:1.0.0-alpha01'
 }
