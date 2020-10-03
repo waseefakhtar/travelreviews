@@ -7,6 +7,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.setContent
 import androidx.ui.tooling.preview.Preview
+import com.example.travel_reviews.ui.components.TravelReviewsTopAppBar
+import com.example.travel_reviews.ui.theme.TravelReviewsTheme
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,14 +23,17 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun TravelReviewsApp() {
-    /*Scaffold(
-        topBar = {
-            TravelReviewsTopAppBar(
+    TravelReviewsTheme {
+        Scaffold(
+            topBar = {
+                /*TravelReviewsTopAppBar(
                 allScreens = allScreens,
                 onTabSelected = { screen -> currentScreen = screen },
                 currentScreen = currentScreen
-            )
-        }
-    )*/
-    Text(text = "Hello World")
+            )*/
+            },
+            bodyContent = {},
+        )
+        Text(text = "Hello World")
+    }
 }
