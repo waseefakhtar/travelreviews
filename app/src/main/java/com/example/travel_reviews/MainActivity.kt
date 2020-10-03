@@ -25,15 +25,8 @@ class MainActivity : AppCompatActivity() {
 fun TravelReviewsApp() {
     TravelReviewsTheme {
         Scaffold(
-            topBar = {
-                /*TravelReviewsTopAppBar(
-                allScreens = allScreens,
-                onTabSelected = { screen -> currentScreen = screen },
-                currentScreen = currentScreen
-            )*/
-            },
+            topBar = { TravelReviewsTopAppBar() },
             bodyContent = {},
         )
-        Text(text = "Hello World")
     }
 }
