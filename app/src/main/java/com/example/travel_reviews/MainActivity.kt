@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.compose.foundation.Text
 import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.setContent
-import androidx.ui.tooling.preview.Preview
-import com.example.travel_reviews.ui.components.TravelReviewsTopAppBar
+import androidx.compose.ui.res.stringResource
 import com.example.travel_reviews.ui.theme.TravelReviewsTheme
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +25,12 @@ class MainActivity : AppCompatActivity() {
 fun TravelReviewsApp() {
     TravelReviewsTheme {
         Scaffold(
-            topBar = { TravelReviewsTopAppBar() },
+            topBar = {
+                val title = stringResource(id = R.string.app_name)
+                TopAppBar(
+                    title = { Text(text = title) }
+                )
+            },
             bodyContent = {},
         )
     }
