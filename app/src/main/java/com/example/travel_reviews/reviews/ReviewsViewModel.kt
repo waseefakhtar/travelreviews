@@ -1,16 +1,15 @@
 package com.example.travel_reviews.reviews
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.example.travel_reviews.network.*
+import kotlinx.coroutines.launch
 
 class ReviewsViewModel : ViewModel() {
 
     var currentSort: ReviewsSort? = null
     var dataSourceFactory = ReviewsDataSourceFactory()
-    val networkState: LiveData<NetworkState>
+    var networkState: LiveData<NetworkState>
     var pagedListLiveData : LiveData<PagedList<ReviewProperty>>
 
     init {

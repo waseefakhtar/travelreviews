@@ -17,7 +17,6 @@ import com.example.travel_reviews.network.ReviewsSort
 
 
 class ReviewsFragment : Fragment() {
-
     private val viewModel: ReviewsViewModel by lazy {
         ViewModelProviders.of(this).get(ReviewsViewModel::class.java)
     }
@@ -39,14 +38,14 @@ class ReviewsFragment : Fragment() {
     }
 
     private fun initNetworkState(binding: FragmentReviewsBinding) {
-        binding.viewModel?.networkState?.observe(this, Observer<NetworkState> { networkState ->
+        binding.viewModel?.networkState?.observe(viewLifecycleOwner, Observer<NetworkState> { networkState ->
             Log.i("ReviewsDataSource", String.format("initRecyclerView is run: %s", networkState))
         })
     }
 
     private fun initRecyclerView(binding: FragmentReviewsBinding) {
         val adapter = ReviewsAdapter()
-        binding.viewModel?.pagedListLiveData?.observe(this, Observer<PagedList<ReviewProperty>> { pagedList ->
+        binding.viewModel?.pagedListLiveData?.observe(viewLifecycleOwner, Observer<PagedList<ReviewProperty>> { pagedList ->
                 adapter.submitList(pagedList)
             })
         binding.reviewsRecyclerView.adapter = adapter
