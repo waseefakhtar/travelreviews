@@ -2,13 +2,13 @@ package com.example.travel_reviews.reviews
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.travel_reviews.databinding.ListViewItemBinding
 import com.example.travel_reviews.network.ReviewProperty
 
-class ReviewsAdapter() : PagedListAdapter<ReviewProperty, ReviewsAdapter.ReviewPropertyViewHolder>(
+class ReviewsAdapter : PagingDataAdapter<ReviewProperty, ReviewsAdapter.ReviewPropertyViewHolder>(
     DiffCallback
 ) {
 

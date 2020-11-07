@@ -1,61 +1,69 @@
 package com.example.travel_reviews.reviews
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.paging.PagedList
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travel_reviews.R
 import com.example.travel_reviews.databinding.FragmentReviewsBinding
-import com.example.travel_reviews.network.NetworkState
-import com.example.travel_reviews.network.ReviewProperty
-import com.example.travel_reviews.network.ReviewsSort
-
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class ReviewsFragment : Fragment() {
 
-    private val viewModel: ReviewsViewModel by lazy {
-        ViewModelProviders.of(this).get(ReviewsViewModel::class.java)
-    }
+    private lateinit var binding: FragmentReviewsBinding
+    private lateinit var viewModel: ReviewsViewModel
+    private val adapter = ReviewsAdapter()
+
+    private var reviewsJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentReviewsBinding.inflate(inflater)
+        binding = FragmentReviewsBinding.inflate(inflater)
 
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-
-        initNetworkState(binding)
-        initRecyclerView(binding)
-
-        setHasOptionsMenu(true)
-        return binding.root
-    }
-
-    private fun initNetworkState(binding: FragmentReviewsBinding) {
-        binding.viewModel?.networkState?.observe(this, Observer<NetworkState> { networkState ->
-            Log.i("ReviewsDataSource", String.format("initRecyclerView is run: %s", networkState))
-        })
-    }
-
-    private fun initRecyclerView(binding: FragmentReviewsBinding) {
-        val adapter = ReviewsAdapter()
-        binding.viewModel?.pagedListLiveData?.observe(this, Observer<PagedList<ReviewProperty>> { pagedList ->
-                adapter.submitList(pagedList)
-            })
-        binding.reviewsRecyclerView.adapter = adapter
+        viewModel = ViewModelProvider(this, defaultViewModelProviderFactory)
+            .get(ReviewsViewModel::class.java)
 
         val dividerItemDecoration = DividerItemDecoration(
             binding.reviewsRecyclerView.context,
             LinearLayoutManager.VERTICAL
         )
         binding.reviewsRecyclerView.addItemDecoration(dividerItemDecoration)
+
+        initAdapter()
+        initNetworkState(binding)
+        initReviewList(binding)
+
+        setHasOptionsMenu(true)
+        return binding.root
+    }
+
+    private fun initAdapter() {
+        binding.reviewsRecyclerView.adapter = adapter
+    }
+
+    private fun initNetworkState(binding: FragmentReviewsBinding) {
+        /*binding.viewModel?.networkState?.observe(this, Observer<NetworkState> { networkState ->
+            Log.i("ReviewsDataSource", String.format("initRecyclerView is run: %s", networkState))
+        })*/
+    }
+
+    private fun initReviewList(binding: FragmentReviewsBinding) {
+        // Make sure we cancel the previous job before creating a new one
+        reviewsJob?.cancel()
+        reviewsJob = lifecycleScope.launch {
+            adapter.submitData(binding.viewModel?.loadData()?.value!!)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -63,7 +71,7 @@ class ReviewsFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         viewModel.updateSort(
             when (item.itemId) {
                 R.id.date_item -> when (viewModel.currentSort) {
@@ -78,5 +86,5 @@ class ReviewsFragment : Fragment() {
             }
         )
         return true
-    }
+    }*/
 }

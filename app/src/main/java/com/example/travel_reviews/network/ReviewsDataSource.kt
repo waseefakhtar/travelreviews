@@ -8,14 +8,17 @@ import java.io.IOException
 const val LIMIT = 10
 private const val OFFSET = 0
 
-class ReviewsDataSource(private val reviewsSort: ReviewsSort?) : PagingSource<Int, ReviewProperty>() {
+class ReviewsDataSource(
+    private val reviewsAPIService: ReviewsAPIService,
+    private val reviewsSort: ReviewsSort?
+) : PagingSource<Int, ReviewProperty>() {
 
     val networkState = MutableLiveData<NetworkState>()
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ReviewProperty> {
         networkState.postValue(NetworkState.LOADING)
         return try {
-            val response = ReviewsAPI.retrofitService.getReviewsAsync(LIMIT, OFFSET, reviewsSort?.value)
+            val response = reviewsAPIService.getReviewsAsync(LIMIT, OFFSET, reviewsSort?.value)
             val reviewList = response.reviewList
             networkState.postValue(NetworkState.SUCCESS)
             LoadResult.Page(
