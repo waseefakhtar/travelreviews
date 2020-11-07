@@ -29,7 +29,7 @@ private val retrofit = Retrofit.Builder()
 
 interface ReviewsAPIService {
     @GET("/activities/23776/reviews")
-    suspend fun getPropertiesAsync(@Query("limit") limit: Int, @Query("offset") offset: Int, @Query("sort") sort: String?): ReviewList
+    suspend fun getReviewsAsync(@Query("limit") limit: Int, @Query("offset") offset: Int, @Query("sort") sort: String?): ReviewList
 }
 
 object ReviewsAPI {

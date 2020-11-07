@@ -51,7 +51,7 @@ dependencies {
     def moshi_version = "1.8.0"
     def kotlin_coroutines_version = "1.1.0"
     def glide_version = "4.8.0"
-    def paging_version = "1.0.1"
+    def paging_version = "3.0.0-alpha07"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
@@ -90,7 +90,11 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
 
     // Paging
-    implementation "android.arch.paging:runtime:$paging_version"
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    // alternatively - without Android dependencies for tests
+    testImplementation "androidx.paging:paging-common:$paging_version"
+    // Jetpack Compose Integration
+    implementation "androidx.paging:paging-compose:1.0.0-alpha01"
 
     // Local unit tests
     testImplementation("com.squareup.okhttp3:mockwebserver:4.8.0")
